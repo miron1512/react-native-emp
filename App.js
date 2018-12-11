@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
 import { Font } from 'expo';
+import { createNavigationContainer } from 'react-navigation';
 
-import LoginScreen from './src/screens/LoginScreen';
-import ProductsScreen from './src/screens/ProductsScreen';
-import ProductScreen from './src/screens/ProductScreen';
+import RootNavigation from './src/navigation/RootNavigation';
 
-import mockProducts from './src/_mocks/mockProducts.json';
+const RootNavigationContainer = createNavigationContainer(RootNavigation);
 
 export default class App extends Component {
   state = {
     fontLoaded: false,
-    screen: 'Login',
-    productId: null,
   };
 
   async componentDidMount() {
@@ -27,34 +24,6 @@ export default class App extends Component {
       return null;
     }
 
-    if (this.state.screen === 'Login') {
-      return (
-        <LoginScreen
-          onPress={() => {
-            this.setState({ screen: 'Products' });
-          }}
-        />
-      );
-    }
-
-    if (this.state.productId) {
-      return (
-        <ProductScreen
-          product={mockProducts.products.find(product => this.state.productId === product.id)}
-          onBackPress={() => {
-            this.setState({ productId: null });
-          }}
-        />
-      );
-    }
-
-    return (
-      <ProductsScreen
-        products={mockProducts.products}
-        onPress={id => {
-          this.setState({ productId: id });
-        }}
-      />
-    );
+    return <RootNavigationContainer />;
   }
 }
