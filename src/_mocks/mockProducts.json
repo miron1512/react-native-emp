@@ -1,0 +1,40 @@
+{
+  "products": [
+    {
+      "id": "001",
+      "name": "Product 1",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fermentum interdum tristique. Vestibulum consectetur diam id suscipit blandit. Proin quis est interdum, iaculis leo non, suscipit ante. Maecenas molestie pulvinar nibh eget semper. Suspendisse dictum in nisi ut iaculis. Nullam lacinia vel tellus eget sodales. Etiam ex lorem, lobortis et dolor nec, bibendum viverra odio. In efficitur nunc porta ligula auctor, at laoreet ante tincidunt. Integer ac convallis augue. Integer eget tortor non orci aliquam aliquam.",
+      "icon": "book-stack"
+    },
+    {
+      "id": "002",
+      "name": "Product 2",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fermentum interdum tristique. Vestibulum consectetur diam id suscipit blandit. Proin quis est interdum, iaculis leo non, suscipit ante. Maecenas molestie pulvinar nibh eget semper. Suspendisse dictum in nisi ut iaculis. Nullam lacinia vel tellus eget sodales. Etiam ex lorem, lobortis et dolor nec, bibendum viverra odio. In efficitur nunc porta ligula auctor, at laoreet ante tincidunt. Integer ac convallis augue. Integer eget tortor non orci aliquam aliquam.",
+      "icon": "google-images"
+    },
+    {
+      "id": "003",
+      "name": "Product 3",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fermentum interdum tristique. Vestibulum consectetur diam id suscipit blandit. Proin quis est interdum, iaculis leo non, suscipit ante. Maecenas molestie pulvinar nibh eget semper. Suspendisse dictum in nisi ut iaculis. Nullam lacinia vel tellus eget sodales. Etiam ex lorem, lobortis et dolor nec, bibendum viverra odio. In efficitur nunc porta ligula auctor, at laoreet ante tincidunt. Integer ac convallis augue. Integer eget tortor non orci aliquam aliquam.",
+      "icon": "nerf-gun"
+    },
+    {
+      "id": "004",
+      "name": "Product 4",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fermentum interdum tristique. Vestibulum consectetur diam id suscipit blandit. Proin quis est interdum, iaculis leo non, suscipit ante. Maecenas molestie pulvinar nibh eget semper. Suspendisse dictum in nisi ut iaculis. Nullam lacinia vel tellus eget sodales. Etiam ex lorem, lobortis et dolor nec, bibendum viverra odio. In efficitur nunc porta ligula auctor, at laoreet ante tincidunt. Integer ac convallis augue. Integer eget tortor non orci aliquam aliquam.",
+      "icon": "packaging"
+    },
+    {
+      "id": "005",
+      "name": "Product 5",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fermentum interdum tristique. Vestibulum consectetur diam id suscipit blandit. Proin quis est interdum, iaculis leo non, suscipit ante. Maecenas molestie pulvinar nibh eget semper. Suspendisse dictum in nisi ut iaculis. Nullam lacinia vel tellus eget sodales. Etiam ex lorem, lobortis et dolor nec, bibendum viverra odio. In efficitur nunc porta ligula auctor, at laoreet ante tincidunt. Integer ac convallis augue. Integer eget tortor non orci aliquam aliquam.",
+      "icon": "sedan"
+    },
+    {
+      "id": "006",
+      "name": "Product 6",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fermentum interdum tristique. Vestibulum consectetur diam id suscipit blandit. Proin quis est interdum, iaculis leo non, suscipit ante. Maecenas molestie pulvinar nibh eget semper. Suspendisse dictum in nisi ut iaculis. Nullam lacinia vel tellus eget sodales. Etiam ex lorem, lobortis et dolor nec, bibendum viverra odio. In efficitur nunc porta ligula auctor, at laoreet ante tincidunt. Integer ac convallis augue. Integer eget tortor non orci aliquam aliquam.",
+      "icon": "teddy-bear"
+    }
+  ]
+}
