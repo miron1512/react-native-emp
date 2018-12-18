@@ -5,12 +5,14 @@ import screens from '../../navigation/screens';
 import Icon from '../../components/Icon';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
+import Modal from '../../components/Modal';
 import styles from './styles';
 
 class LoginScreen extends Component {
   state = {
     username: '',
     password: '',
+    error: null,
   };
 
   handleUsernameChange = value => {
@@ -45,6 +47,7 @@ class LoginScreen extends Component {
       })
       .catch(error => {
         console.log('fetch error', error);
+        this.setState({ error: String(error) });
       });
   };
 
@@ -62,6 +65,23 @@ class LoginScreen extends Component {
           />
         </View>
         <Button primary title="Login" onPress={this.handleSubmit} />
+        <Modal
+          visible={!!this.state.error}
+          title="Error"
+          onCancel={() => {
+            this.setState({ error: null });
+          }}
+          onOk={() => {
+            this.setState({ error: null }, () => {
+              this.handleSubmit();
+            });
+          }}
+          okText="Try again"
+        >
+          <View>
+            <Text>{this.state.error}</Text>
+          </View>
+        </Modal>
       </View>
     );
   }
