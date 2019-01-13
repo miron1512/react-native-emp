@@ -16,14 +16,18 @@ const styles = StyleSheet.create({
   productName: {
     fontFamily: 'vincHand',
     fontSize: 30,
+    flexShrink: 1,
     flexGrow: 1,
+  },
+  productPrice: {
+    marginLeft: 8,
   },
   nextIcon: {
     width: 20,
     height: 20,
     marginLeft: 15,
     marginRight: 10,
-  }
+  },
 });
 
 export default styles;

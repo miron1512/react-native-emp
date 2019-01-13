@@ -9,9 +9,7 @@ import screens from './screens';
 const RootNavigation = createStackNavigator(
   {
     [screens.Login]: { screen: LoginScreen },
-    [screens.Products]: {
-      screen: ProductsScreen,
-    },
+    [screens.Products]: { screen: ProductsScreen },
     [screens.Product]: { screen: ProductScreen },
   },
   {
