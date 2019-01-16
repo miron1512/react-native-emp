@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderColor: '#D8DCDE',
+    height: 50,
   },
   productIcon: {
     width: 30,

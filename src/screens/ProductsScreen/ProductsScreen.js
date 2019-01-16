@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, ActivityIndicator } from 'react-native';
+import {
+  Animated,
+  View,
+  Text,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native';
 
 import screens from '../../navigation/screens';
 import ProductItem from '../../components/ProductItem';
@@ -9,6 +15,10 @@ const PAGE_SIZE = 15;
 const API_PRODUCTS = 'http://ecsc00a02fb3.epam.com/rest/V1/products';
 
 class ProductsScreen extends Component {
+  static navigationOptions = {
+    header: null,
+  };
+
   state = {
     products: [],
     currentPage: 0,
@@ -17,6 +27,8 @@ class ProductsScreen extends Component {
     loading: false,
     error: null,
   };
+
+  animatedValue = [];
 
   componentDidMount() {
     this.loadProducts();
@@ -45,6 +57,19 @@ class ProductsScreen extends Component {
       .then(response => response.json())
       .then(data => {
         if (data.items) {
+          const newAnimatedChunk = data.items.map((item, index) => {
+            return new Animated.Value(0);
+          });
+          this.animatedValue = [...this.animatedValue, ...newAnimatedChunk];
+          const animations = this.animatedValue.map((item, index) => {
+            return Animated.timing(this.animatedValue[index], {
+              toValue: 1,
+              duration: 30,
+              useNativeDriver: true,
+            });
+          });
+          Animated.sequence(animations).start();
+
           this.setState({
             products: [...this.state.products, ...data.items],
             currentPage: this.state.currentPage + 1,
@@ -64,6 +89,7 @@ class ProductsScreen extends Component {
   };
 
   handleRefresh = () => {
+    this.animatedValue = [];
     this.setState(
       {
         products: [],
@@ -81,14 +107,27 @@ class ProductsScreen extends Component {
     const { navigation } = this.props;
     const { products, refreshing, loading } = this.state;
 
+    const onEndReachedThreshold = products.length ? 1 / products.length : 0.1;
+
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Products</Text>
         <FlatList
           data={products}
           keyExtractor={item => `${item.id}`}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <ProductItem
+              style={{
+                opacity: this.animatedValue[index],
+                transform: [
+                  {
+                    translateX: this.animatedValue[index].interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [50, 0],
+                    }),
+                  },
+                ],
+              }}
               product={item}
               onPress={product => {
                 navigation.navigate(screens.Product, { product });
@@ -98,7 +137,7 @@ class ProductsScreen extends Component {
           onEndReached={() => {
             this.loadProducts();
           }}
-          onEndReachedThreshold={0}
+          onEndReachedThreshold={onEndReachedThreshold}
           refreshing={refreshing}
           onRefresh={this.handleRefresh}
         />
