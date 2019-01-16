@@ -7,7 +7,12 @@ const styles = StyleSheet.create({
   },
   card: {
     borderWidth: 2,
-    borderColor: '#D8DCDE'
+    borderColor: '#D8DCDE',
+    padding: 10,
+  },
+  cardButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
   header: {
     flexDirection: 'row',
