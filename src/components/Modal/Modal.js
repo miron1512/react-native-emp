@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Modal as RNModal } from 'react-native';
 
+import SpringView from '../SpringView';
 import Button from '../Button';
 import styles from './styles';
 
@@ -21,7 +22,7 @@ const Modal = ({
   return (
     <RNModal visible={visible} transparent onRequestClose={onClose}>
       <View style={styles.container}>
-        <View style={styles.modal}>
+        <SpringView style={styles.modal}>
           {title && (
             <View style={styles.header}>
               <Text style={styles.title}>{title.toUpperCase()}</Text>
@@ -32,7 +33,7 @@ const Modal = ({
             {onCancel && <Button title={cancelText} onPress={onCancel} />}
             {onOk && <Button primary title={okText} onPress={onOk} />}
           </View>
-        </View>
+        </SpringView>
       </View>
     </RNModal>
   );
