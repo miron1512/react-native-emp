@@ -9,6 +9,10 @@ import Modal from '../../components/Modal';
 import styles from './styles';
 
 class LoginScreen extends Component {
+  static navigationOptions = {
+    header: null,
+  };
+
   state = {
     username: '',
     password: '',

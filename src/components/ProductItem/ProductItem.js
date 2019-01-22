@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { Animated, View, Text, TouchableOpacity } from 'react-native';
 
 import Icon from '../Icon';
 import styles from './styles';
@@ -14,25 +14,27 @@ const iconNames = [
   'support',
 ];
 
-const ProductItem = ({ product, onPress }) => {
+const ProductItem = ({ product, style, onPress }) => {
   const { name, price, id } = product;
   const iconName = iconNames[id % iconNames.length];
 
   return (
-    <View style={styles.container}>
-      <Icon style={styles.productIcon} name={iconName} />
-      <Text ellipsizeMode="tail" numberOfLines={1} style={styles.productName}>
-        {name}
-      </Text>
-      <Text style={styles.productPrice}>${price}</Text>
-      <TouchableOpacity
-        onPress={() => {
-          onPress(product);
-        }}
-      >
-        <Icon style={styles.nextIcon} name="chevron-left" rotate={180} />
-      </TouchableOpacity>
-    </View>
+    <Animated.View style={style}>
+      <View style={styles.container}>
+        <Icon style={styles.productIcon} name={iconName} />
+        <Text ellipsizeMode="tail" numberOfLines={1} style={styles.productName}>
+          {name}
+        </Text>
+        <Text style={styles.productPrice}>${price}</Text>
+        <TouchableOpacity
+          onPress={() => {
+            onPress(product);
+          }}
+        >
+          <Icon style={styles.nextIcon} name="chevron-left" rotate={180} />
+        </TouchableOpacity>
+      </View>
+    </Animated.View>
   );
 };
 
