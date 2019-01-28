@@ -30,8 +30,8 @@ class LoginScreen extends Component {
     error: null,
   };
 
-  constructor() {
-    super();
+  constructor(props: any) {
+    super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -62,17 +62,17 @@ class LoginScreen extends Component {
     this.props.navigation.navigate(screens.Products);
   }
 
-  handleUsernameChange = value => {
+  handleUsernameChange = (value: string) => {
     this.setState({ username: value });
   };
 
-  handlePasswordChange = value => {
+  handlePasswordChange = (value: string) => {
     this.setState({ password: value });
   };
 
-  async showErrorMessage(message) {
+  async showErrorMessage(message: string) {
     await AsyncStorage.clear();
-    Vibration.vibrate(VIBRATE_DURATION);
+    Vibration.vibrate(VIBRATE_DURATION, false);
     this.setState({ error: message });
   }
 

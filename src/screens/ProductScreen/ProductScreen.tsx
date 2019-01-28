@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, LayoutAnimation, UIManager } from 'react-native';
 
 import Icon from '../../components/Icon';
+import { Icons } from '../../components/Icon/types';
 import Button from '../../components/Button';
 import FlipComponent from '../../components/FlipComponent';
 import styles from './styles';
@@ -9,7 +10,7 @@ import styles from './styles';
 UIManager.setLayoutAnimationEnabledExperimental &&
   UIManager.setLayoutAnimationEnabledExperimental(true);
 
-const iconNames = [
+const iconNames: Icons[] = [
   'book-stack',
   'google-images',
   'nerf-gun',
@@ -23,7 +24,7 @@ class ProductScreen extends Component {
   componentWillMount() {
     LayoutAnimation.configureNext({
       create: {
-        property: LayoutAnimation.Properties.scaleY,
+        property: (LayoutAnimation as any).Properties.scaleY,
         type: LayoutAnimation.Types.spring,
         springDamping: 0.4,
       },
@@ -33,7 +34,7 @@ class ProductScreen extends Component {
   }
 
   render() {
-    const { navigation } = this.props;
+    const { navigation } = this.props as any;
     const {
       state: {
         params: { product },
@@ -43,18 +44,17 @@ class ProductScreen extends Component {
 
     const { name, id, custom_attributes } = product;
     const description = custom_attributes.find(
-      attr => attr.attribute_code === 'description'
+      (attr: any) => attr.attribute_code === 'description'
     );
     const iconName = iconNames[id % iconNames.length];
 
     return (
       <View style={styles.container}>
         <FlipComponent
-          flipType="rotateY"
           renderFrontView={({ flip }) => (
             <View style={styles.card}>
               <View style={styles.header}>
-                <Icon large style={styles.productIcon} name={iconName} />
+                <Icon large name={iconName} />
                 <Text style={styles.productName}>{name}</Text>
               </View>
               <View style={styles.content}>
