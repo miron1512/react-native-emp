@@ -23,7 +23,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.vmironchuk.react-native-emp"
+    },
+    "android": {
+      "package": "com.vmironchuk.react_native_emp"
     }
   }
 }
