@@ -7,13 +7,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'center',
   },
-  title: {
-    fontFamily: 'vincHand',
-    fontSize: 40,
-  },
-  form: {
-    width: 300,
-  },
 });
 
 export default styles;

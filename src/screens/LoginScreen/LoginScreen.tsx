@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Alert,
-  AsyncStorage,
-  NetInfo,
-  Text,
-  Vibration,
-  View,
-} from 'react-native';
+import { AsyncStorage, Text, Vibration, View } from 'react-native';
 
 import screens from '../../navigation/screens';
 import Icon from '../../components/Icon';
@@ -45,14 +38,6 @@ class LoginScreen extends Component {
       return;
     }
 
-    const isConnected = await NetInfo.isConnected.fetch();
-    if (!isConnected) {
-      Alert.alert('No Internet Connection', 'Please, turn on the internet', [
-        { text: 'Ok', style: 'default' },
-      ]);
-      console.log('post alert');
-    }
-
     const expireDate = new Date(expireDateString);
     if (new Date() > expireDate) {
       await AsyncStorage.clear();
@@ -78,14 +63,6 @@ class LoginScreen extends Component {
 
   async handleSubmit() {
     const { username, password } = this.state;
-
-    const isConnected = await NetInfo.isConnected.fetch();
-    if (!isConnected) {
-      Alert.alert('No Internet Connection', 'Please, turn on the internet', [
-        { text: 'Ok', style: 'default' },
-      ]);
-      return;
-    }
 
     try {
       const response = await fetch(
