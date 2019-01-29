@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
 import { Animated, View, Easing } from 'react-native';
 
-class FlipComponent extends Component {
+import { FlipComponentProps } from './types';
+
+class FlipComponent extends Component<FlipComponentProps> {
   state = {
     isFlipped: false,
   };
 
-  componentWillMount() {
-    this.animatedValue = new Animated.Value(0);
+  animatedValue = new Animated.Value(0);
 
-    this.frontInterpolate = this.animatedValue.interpolate({
-      inputRange: [0, 180],
-      outputRange: ['0deg', '180deg'],
-    });
+  frontInterpolate = this.animatedValue.interpolate({
+    inputRange: [0, 180],
+    outputRange: ['0deg', '180deg'],
+  });
 
-    this.backInterpolate = this.animatedValue.interpolate({
-      inputRange: [0, 180],
-      outputRange: ['180deg', '360deg'],
-    });
-  }
+  backInterpolate = this.animatedValue.interpolate({
+    inputRange: [0, 180],
+    outputRange: ['180deg', '360deg'],
+  });
 
   handleFlip = () => {
     const { isFlipped } = this.state;
@@ -58,10 +58,10 @@ class FlipComponent extends Component {
             {renderFrontView(renderParams)}
           </Animated.View>
         ) : (
-          <Animated.View style={backAnimationStyles}>
-            {renderBackView(renderParams)}
-          </Animated.View>
-        )}
+            <Animated.View style={backAnimationStyles}>
+              {renderBackView(renderParams)}
+            </Animated.View>
+          )}
       </View>
     );
   }

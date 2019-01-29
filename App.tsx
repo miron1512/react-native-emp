@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { Font } from 'expo';
-import { createNavigationContainer } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
 
 import RootNavigation from './src/navigation/RootNavigation';
+import withInternetConnection from './src/hocs/withInternetConnection';
 
-const RootNavigationContainer = createNavigationContainer(RootNavigation);
-
+const RootNavigationContainer = createAppContainer(RootNavigation);
+const RootWithInternetConnection = withInternetConnection(
+  RootNavigationContainer
+);
 export default class App extends Component {
   state = {
     fontLoaded: false,
@@ -24,6 +27,6 @@ export default class App extends Component {
       return null;
     }
 
-    return <RootNavigationContainer />;
+    return <RootWithInternetConnection />;
   }
 }

@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { SFC } from 'react';
 import { Animated, View, Text, TouchableOpacity } from 'react-native';
 
 import Icon from '../Icon';
+import { Icons } from '../Icon/types';
 import styles from './styles';
+import { ProductItemProps } from './types';
 
-const iconNames = [
+const iconNames: Icons[] = [
   'book-stack',
   'google-images',
   'nerf-gun',
@@ -14,7 +16,7 @@ const iconNames = [
   'support',
 ];
 
-const ProductItem = ({ product, style, onPress }) => {
+const ProductItem: SFC<ProductItemProps> = ({ product, style, onPress }) => {
   const { name, price, id } = product;
   const iconName = iconNames[id % iconNames.length];
 

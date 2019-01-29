@@ -28,7 +28,7 @@ class ProductsScreen extends Component {
     error: null,
   };
 
-  animatedValue = [];
+  animatedValue: Animated.Value[] = [];
 
   componentDidMount() {
     this.loadProducts();
@@ -57,7 +57,7 @@ class ProductsScreen extends Component {
       .then(response => response.json())
       .then(data => {
         if (data.items) {
-          const newAnimatedChunk = data.items.map((item, index) => {
+          const newAnimatedChunk = data.items.map(() => {
             return new Animated.Value(0);
           });
           this.animatedValue = [...this.animatedValue, ...newAnimatedChunk];
@@ -104,7 +104,7 @@ class ProductsScreen extends Component {
   };
 
   render() {
-    const { navigation } = this.props;
+    const { navigation } = this.props as any;
     const { products, refreshing, loading } = this.state;
 
     const onEndReachedThreshold = products.length ? 1 / products.length : 0.1;

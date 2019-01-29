@@ -3,7 +3,7 @@
     "name": "react-native-emp",
     "slug": "react-native-emp",
     "privacy": "public",
-    "sdkVersion": "31.0.0",
+    "sdkVersion": "32.0.0",
     "platforms": [
       "ios",
       "android"
@@ -23,7 +23,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.vmironchuk.react-native-emp"
+    },
+    "android": {
+      "package": "com.vmironchuk.react_native_emp"
     }
   }
 }

@@ -1,19 +1,20 @@
-import React from 'react';
+import React, { SFC } from 'react';
 import { View, Text, Modal as RNModal } from 'react-native';
 
 import SpringView from '../SpringView';
 import Button from '../Button';
 import styles from './styles';
+import { ModalProps } from './types';
 
-const Modal = ({
+const Modal: SFC<ModalProps> = ({
   title,
-  onClose,
+  onClose = () => { },
   visible,
   children,
   onOk,
   onCancel,
-  okText,
-  cancelText,
+  okText = 'Ok',
+  cancelText = 'Cancel',
 }) => {
   if (!visible) {
     return null;
@@ -25,7 +26,7 @@ const Modal = ({
         <SpringView style={styles.modal}>
           {title && (
             <View style={styles.header}>
-              <Text style={styles.title}>{title.toUpperCase()}</Text>
+              <Text>{title.toUpperCase()}</Text>
             </View>
           )}
           <View style={styles.content}>{children}</View>
@@ -37,14 +38,6 @@ const Modal = ({
       </View>
     </RNModal>
   );
-};
-
-Modal.defaultProps = {
-  onClose: () => {},
-  onCancel: null,
-  onOk: null,
-  cancelText: 'Cancel',
-  okText: 'Ok',
 };
 
 export default Modal;

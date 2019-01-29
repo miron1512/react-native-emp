@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Alert,
-  AsyncStorage,
-  NetInfo,
-  Text,
-  Vibration,
-  View,
-} from 'react-native';
+import { AsyncStorage, Text, Vibration, View } from 'react-native';
 
 import screens from '../../navigation/screens';
 import Icon from '../../components/Icon';
@@ -30,8 +23,8 @@ class LoginScreen extends Component {
     error: null,
   };
 
-  constructor() {
-    super();
+  constructor(props: any) {
+    super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -45,14 +38,6 @@ class LoginScreen extends Component {
       return;
     }
 
-    const isConnected = await NetInfo.isConnected.fetch();
-    if (!isConnected) {
-      Alert.alert('No Internet Connection', 'Please, turn on the internet', [
-        { text: 'Ok', style: 'default' },
-      ]);
-      console.log('post alert');
-    }
-
     const expireDate = new Date(expireDateString);
     if (new Date() > expireDate) {
       await AsyncStorage.clear();
@@ -62,30 +47,22 @@ class LoginScreen extends Component {
     this.props.navigation.navigate(screens.Products);
   }
 
-  handleUsernameChange = value => {
+  handleUsernameChange = (value: string) => {
     this.setState({ username: value });
   };
 
-  handlePasswordChange = value => {
+  handlePasswordChange = (value: string) => {
     this.setState({ password: value });
   };
 
-  async showErrorMessage(message) {
+  async showErrorMessage(message: string) {
     await AsyncStorage.clear();
-    Vibration.vibrate(VIBRATE_DURATION);
+    Vibration.vibrate(VIBRATE_DURATION, false);
     this.setState({ error: message });
   }
 
   async handleSubmit() {
     const { username, password } = this.state;
-
-    const isConnected = await NetInfo.isConnected.fetch();
-    if (!isConnected) {
-      Alert.alert('No Internet Connection', 'Please, turn on the internet', [
-        { text: 'Ok', style: 'default' },
-      ]);
-      return;
-    }
 
     try {
       const response = await fetch(
