@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
+    color:'black',
     fontFamily: 'vincHand',
     fontSize: 40,
   },
