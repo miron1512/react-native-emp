@@ -6,11 +6,12 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
+    "lottie-react-native": "^2.5.11",
     "react": "16.6.3",
     "react-native": "0.58.3",
     "react-native-device-info": "^0.26.1",
     "react-native-gesture-handler": "^1.0.15",
-    "react-navigation": "^3.0.7"
+    "react-navigation": "^3.1.5"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.1.0",
