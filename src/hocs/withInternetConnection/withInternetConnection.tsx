@@ -45,6 +45,7 @@ const withInternetConnection = (WrappedComponent: ComponentType) => {
             autoPlay
             loop
             source={require('./noInternetConnectionAnimation.json')}
+            style={styles.animationContainer}
           />
           <Text>Please, connect {DeviceInfo.getBrand()} to the internet</Text>
         </View>

@@ -7,6 +7,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'center',
   },
+  animationContainer: {
+    height: 300,
+  },
 });
 
 export default styles;
