@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { AsyncStorage, Text, Vibration, View } from 'react-native';
+import { Text, Vibration, View } from 'react-native';
 
+import { getToken } from '../../api';
+import { saveUserToken, isUserTokenValid } from '../../services/storage';
 import screens from '../../navigation/screens';
 import Icon from '../../components/Icon';
 import Input from '../../components/Input';
@@ -8,8 +10,6 @@ import Button from '../../components/Button';
 import Modal from '../../components/Modal';
 import styles from './styles';
 
-const USER_TOKEN = 'USER_TOKEN';
-const EXPIRE_DATE = 'EXPIRE_DATE';
 const VIBRATE_DURATION = 1000;
 
 class LoginScreen extends Component {
@@ -30,21 +30,11 @@ class LoginScreen extends Component {
   }
 
   async componentDidMount() {
-    const [[, userToken], [, expireDateString]] = await AsyncStorage.multiGet([
-      USER_TOKEN,
-      EXPIRE_DATE,
-    ]);
-    if (!userToken) {
-      return;
-    }
+    const isTokenValid = await isUserTokenValid();
 
-    const expireDate = new Date(expireDateString);
-    if (new Date() > expireDate) {
-      await AsyncStorage.clear();
-      return;
+    if (isTokenValid) {
+      this.props.navigation.navigate(screens.Products);
     }
-
-    this.props.navigation.navigate(screens.Products);
   }
 
   handleUsernameChange = (value: string) => {
@@ -56,7 +46,6 @@ class LoginScreen extends Component {
   };
 
   async showErrorMessage(message: string) {
-    await AsyncStorage.clear();
     Vibration.vibrate(VIBRATE_DURATION, false);
     this.setState({ error: message });
   }
@@ -65,39 +54,12 @@ class LoginScreen extends Component {
     const { username, password } = this.state;
 
     try {
-      const response = await fetch(
-        'http://ecsc00a02fb3.epam.com/index.php/rest/V1/integration/customer/token',
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            username,
-            password,
-          }),
-        }
-      );
+      const token = await getToken(username, password);
 
-      const data = await response.json();
-      if (typeof data !== 'string') {
-        this.showErrorMessage(
-          'You have entered an invalid username or password'
-        );
-        return;
-      }
-
-      const expireDate = new Date();
-      expireDate.setMinutes(expireDate.getMinutes() + 2);
-      await AsyncStorage.multiSet([
-        [USER_TOKEN, data],
-        [EXPIRE_DATE, expireDate.toISOString()],
-      ]);
+      await saveUserToken(token);
 
       this.props.navigation.navigate(screens.Products);
     } catch (error) {
-      console.log('fetch error', error);
       this.showErrorMessage(String(error));
     }
   }
