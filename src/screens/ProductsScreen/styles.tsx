@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
+    color: 'black',
     fontFamily: 'vincHand',
     fontSize: 60,
     marginTop: 30,

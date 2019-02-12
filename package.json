@@ -1,25 +1,31 @@
 {
-  "main": "node_modules/expo/AppEntry.js",
+  "name": "react-native-emp",
+  "version": "0.0.1",
+  "private": true,
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "eject": "expo eject"
+    "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
-    "expo": "^32.0.0",
-    "react": "16.5.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
-    "react-navigation": "^3.0.7"
+    "lottie-react-native": "^2.5.11",
+    "react": "16.6.3",
+    "react-native": "0.58.3",
+    "react-native-device-info": "^0.26.1",
+    "react-native-gesture-handler": "^1.0.15",
+    "react-native-splash-screen": "^3.2.0",
+    "react-navigation": "^3.1.5"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.1.0",
-    "@types/expo": "^31.0.8",
     "@types/react": "^16.5.0",
     "@types/react-native": "^0.57.32",
     "@types/react-navigation": "^3.0.1",
-    "babel-preset-expo": "^5.0.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "metro-react-native-babel-preset": "0.51.1",
     "typescript": "^3.2.4"
   },
-  "private": true
+  "rnpm": {
+    "assets": [
+      "./assets/fonts/"
+    ]
+  }
 }

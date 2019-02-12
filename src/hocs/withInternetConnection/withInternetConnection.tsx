@@ -1,5 +1,7 @@
 import React, { Component, ComponentType } from 'react';
 import { NetInfo, Text, View } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
+import LottieView from 'lottie-react-native';
 
 import styles from './styles';
 
@@ -39,7 +41,13 @@ const withInternetConnection = (WrappedComponent: ComponentType) => {
       }
       return (
         <View style={styles.container}>
-          <Text>Please, connect to the internet</Text>
+          <LottieView
+            autoPlay
+            loop
+            source={require('./noInternetConnectionAnimation.json')}
+            style={styles.animationContainer}
+          />
+          <Text>Please, connect {DeviceInfo.getBrand()} to the internet</Text>
         </View>
       );
     }
