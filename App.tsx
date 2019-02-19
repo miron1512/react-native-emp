@@ -8,12 +8,12 @@ import withInternetConnection from './src/hocs/withInternetConnection';
 
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
-  onRegister: function(token) {
+  onRegister: (token) => {
     console.log('TOKEN:', token);
   },
 
   // (required) Called when a remote or local notification is opened or received
-  onNotification: function(notification) {
+  onNotification: (notification) => {
     console.log('NOTIFICATION:', notification);
   },
 });
