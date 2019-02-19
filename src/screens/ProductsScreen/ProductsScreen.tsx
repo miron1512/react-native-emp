@@ -7,12 +7,10 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
+import { getProducts, PAGE_SIZE } from '../../api';
 import screens from '../../navigation/screens';
 import ProductItem from '../../components/ProductItem';
 import styles from './styles';
-
-const PAGE_SIZE = 15;
-const API_PRODUCTS = 'http://ecsc00a02fb3.epam.com/rest/V1/products';
 
 class ProductsScreen extends Component {
   static navigationOptions = {
@@ -34,58 +32,44 @@ class ProductsScreen extends Component {
     this.loadProducts();
   }
 
-  loadProducts = () => {
+  loadProducts = async () => {
     const { currentPage, totalProducts } = this.state;
 
     if (totalProducts && currentPage >= totalProducts / PAGE_SIZE) {
       return;
     }
 
-    const url =
-      API_PRODUCTS +
-      `?searchCriteria[pageSize]=${PAGE_SIZE}` +
-      `&searchCriteria[currentPage]=${currentPage + 1}`;
-
     this.setState({ loading: true });
 
-    fetch(url, {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.items) {
-          const newAnimatedChunk = data.items.map(() => {
-            return new Animated.Value(0);
-          });
-          this.animatedValue = [...this.animatedValue, ...newAnimatedChunk];
-          const animations = this.animatedValue.map((item, index) => {
-            return Animated.timing(this.animatedValue[index], {
-              toValue: 1,
-              duration: 30,
-              useNativeDriver: true,
-            });
-          });
-          Animated.sequence(animations).start();
-
-          this.setState({
-            products: [...this.state.products, ...data.items],
-            currentPage: this.state.currentPage + 1,
-            totalProducts: data.total_count,
-            refreshing: false,
-            loading: false,
-          });
-        }
-      })
-      .catch(error => {
-        this.setState({
-          error: String(error),
-          loading: false,
-          refreshing: false,
+    try {
+      const { items, total_count }: any = await getProducts(currentPage + 1);
+      const newAnimatedChunk = items.map(() => {
+        return new Animated.Value(0);
+      });
+      this.animatedValue = [...this.animatedValue, ...newAnimatedChunk];
+      const animations = this.animatedValue.map((item, index) => {
+        return Animated.timing(this.animatedValue[index], {
+          toValue: 1,
+          duration: 30,
+          useNativeDriver: true,
         });
       });
+      Animated.sequence(animations).start();
+
+      this.setState({
+        products: [...this.state.products, ...items],
+        currentPage: this.state.currentPage + 1,
+        totalProducts: total_count,
+        refreshing: false,
+        loading: false,
+      });
+    } catch (error) {
+      this.setState({
+        error: String(error),
+        loading: false,
+        refreshing: false,
+      });
+    }
   };
 
   handleRefresh = () => {
@@ -114,7 +98,7 @@ class ProductsScreen extends Component {
         <Text style={styles.title}>Products</Text>
         <FlatList
           data={products}
-          keyExtractor={item => `${item.id}`}
+          keyExtractor={(item: any) => `${item.id}`}
           renderItem={({ item, index }) => (
             <ProductItem
               style={{

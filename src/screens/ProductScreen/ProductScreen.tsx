@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, LayoutAnimation, UIManager } from 'react-native';
+import PushNotification from 'react-native-push-notification';
 
+import { getCartId } from '../../services/storage';
+import { createCart, addProductToCart } from '../../api';
 import Icon from '../../components/Icon';
 import { Icons } from '../../components/Icon/types';
 import Button from '../../components/Button';
@@ -32,6 +35,35 @@ class ProductScreen extends Component {
       duration: 1000,
     });
   }
+
+  handleAddToCart = async () => {
+    const { navigation } = this.props as any;
+    const {
+      state: {
+        params: { product },
+      },
+    } = navigation;
+
+    let cartId = await getCartId();
+    console.log('handleAddToCart cartId', cartId);
+    if (!cartId) {
+      const cart = await createCart();
+      console.log('handleAddToCart cart', cart);
+      if (!cart) {
+        return;
+      }
+      cartId = cart.cartId;
+    }
+
+    const addedProduct = await addProductToCart(cartId, product, 1);
+    console.log('handleAddToCart addedProduct', addedProduct);
+
+    PushNotification.localNotification({
+      vibration: 300,
+      title: 'New product was added to the cart',
+      message: `${addedProduct.name} was added to the cart`,
+    });
+  };
 
   render() {
     const { navigation } = this.props as any;
@@ -75,6 +107,11 @@ class ProductScreen extends Component {
                   onPress={() => {
                     flip();
                   }}
+                />
+                <Button
+                  title="Add to cart"
+                  primary
+                  onPress={this.handleAddToCart}
                 />
               </View>
             </View>
