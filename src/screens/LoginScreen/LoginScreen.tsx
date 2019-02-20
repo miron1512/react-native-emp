@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, Vibration, View } from 'react-native';
+import { Sentry, SentrySeverity } from 'react-native-sentry';
 
 import { getToken } from '../../api';
 import { saveUserToken, isUserTokenValid } from '../../services/storage';
@@ -34,6 +35,14 @@ class LoginScreen extends Component {
 
     if (isTokenValid) {
       this.props.navigation.navigate(screens.Products);
+
+      Sentry.captureBreadcrumb({
+        level: SentrySeverity.Info,
+        message: 'User logged in',
+        data: {
+          timestamp: Date.now(),
+        },
+      });
     }
   }
 
@@ -57,6 +66,14 @@ class LoginScreen extends Component {
       const token = await getToken(username, password);
 
       await saveUserToken(token);
+
+      Sentry.captureBreadcrumb({
+        level: SentrySeverity.Info,
+        message: 'User logged in',
+        data: {
+          timestamp: Date.now(),
+        },
+      });
 
       this.props.navigation.navigate(screens.Products);
     } catch (error) {

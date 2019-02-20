@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, LayoutAnimation, UIManager } from 'react-native';
 import PushNotification from 'react-native-push-notification';
+import { Sentry, SentrySeverity } from 'react-native-sentry';
 
 import { getCartId } from '../../services/storage';
 import { createCart, addProductToCart } from '../../api';
@@ -45,6 +46,7 @@ class ProductScreen extends Component {
     } = navigation;
 
     let cartId = await getCartId();
+
     console.log('handleAddToCart cartId', cartId);
     if (!cartId) {
       const cart = await createCart();
@@ -53,9 +55,30 @@ class ProductScreen extends Component {
         return;
       }
       cartId = cart.cartId;
+
+      Sentry.captureBreadcrumb({
+        level: SentrySeverity.Info,
+        message: 'User created cart',
+        data: {
+          timestamp: Date.now(),
+          cartId,
+        },
+      });
     }
 
     const addedProduct = await addProductToCart(cartId, product, 1);
+    Sentry.captureBreadcrumb({
+      level: SentrySeverity.Info,
+      message: 'User added product to cart',
+      data: {
+        timestamp: Date.now(),
+        productName: addedProduct.name,
+        cartId,
+      },
+    });
+    Sentry.captureMessage('User added product to cart successfully', {
+      level: SentrySeverity.Info,
+    });
     console.log('handleAddToCart addedProduct', addedProduct);
 
     PushNotification.localNotification({
