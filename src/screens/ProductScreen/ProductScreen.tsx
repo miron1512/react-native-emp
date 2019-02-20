@@ -81,8 +81,13 @@ class ProductScreen extends Component {
     });
     console.log('handleAddToCart addedProduct', addedProduct);
 
+    const { id } = product;
+    const iconName = iconNames[id % iconNames.length];
+    const notificationIconName = `ic_${iconName}`.replace('-', '_');
+
     PushNotification.localNotification({
       vibration: 300,
+      largeIcon: notificationIconName,
       title: 'New product was added to the cart',
       message: `${addedProduct.name} was added to the cart`,
     });
