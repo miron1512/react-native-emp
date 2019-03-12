@@ -44,14 +44,14 @@ export const getProducts = async (
 };
 
 export const createCart = async () => {
-  const usetToken = await getUserToken();
-  if (!usetToken) {
+  const userToken = await getUserToken();
+  if (!userToken) {
     return null;
   }
   const response = await fetch(`${BASE_URL}/rest/default/V1/carts/mine`, {
     headers: {
       ...HEADERS,
-      Authorization: `Bearer ${usetToken.token}`,
+      Authorization: `Bearer ${userToken.token}`,
     },
   });
 
