@@ -1,4 +1,5 @@
 import { AsyncStorage } from 'react-native';
+import * as Keychain from 'react-native-keychain';
 import { USER_TOKEN, CART_ID } from './constants';
 
 export const saveUserToken = async (token: string) => {
@@ -8,7 +9,8 @@ export const saveUserToken = async (token: string) => {
     token,
     expireDate: expireDate.toISOString(),
   };
-  await AsyncStorage.setItem(USER_TOKEN, JSON.stringify(data));
+  await Keychain.setGenericPassword(JSON.stringify(data), '');
+  // await AsyncStorage.setItem(USER_TOKEN, JSON.stringify(data));
 
   return data;
 };

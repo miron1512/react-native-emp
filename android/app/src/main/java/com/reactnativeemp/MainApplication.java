@@ -3,6 +3,7 @@ package com.reactnativeemp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.oblador.keychain.KeychainPackage;
 import io.sentry.RNSentryPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
@@ -29,6 +30,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new KeychainPackage(),
             new RNSentryPackage(),
             new ReactNativePushNotificationPackage(),
             new SplashScreenReactPackage(),
