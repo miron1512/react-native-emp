@@ -9,27 +9,37 @@ export const saveUserToken = async (token: string) => {
     token,
     expireDate: expireDate.toISOString(),
   };
-  await Keychain.setGenericPassword(JSON.stringify(data), '');
-  // await AsyncStorage.setItem(USER_TOKEN, JSON.stringify(data));
+  await Keychain.setGenericPassword(JSON.stringify(data), USER_TOKEN);
 
   return data;
 };
 
 export const getUserToken = async () => {
-  const { token, expireDate: expireDateString } = JSON.parse(
-    (await AsyncStorage.getItem(USER_TOKEN)) || '{}'
-  );
+  try {
+    const credentials = await Keychain.getGenericPassword();
+    if (credentials && typeof credentials !== 'boolean') {
+      const { token, expireDate: expireDateString } = JSON.parse(
+        credentials.username || '{}'
+      );
 
-  const expireDate = new Date(expireDateString);
-  if (!token || !expireDateString || new Date() > expireDate) {
-    await AsyncStorage.removeItem(USER_TOKEN);
-    return null;
+      const expireDate = new Date(expireDateString);
+      if (!token || !expireDateString || new Date() > expireDate) {
+        await Keychain.resetGenericPassword();
+        return null;
+      }
+
+      return {
+        token,
+        expireDate,
+      };
+    } else {
+      console.log('No credentials stored');
+    }
+  } catch (error) {
+    console.log("Keychain couldn't be accessed!", error);
   }
 
-  return {
-    token,
-    expireDate,
-  };
+  return null;
 };
 
 export const isUserTokenValid = async () => {
